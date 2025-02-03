@@ -1,0 +1,19 @@
+{
+    "name": "Core IoT",
+    "description": "Library extension for Yolo UNO to work with Core IoT platform",
+    "libs": [
+        "ci_device_mqtt.py",
+        "mqtt_as.py",
+        "provision_client.py",
+        "sdk_utils.py"
+    ],
+    "blocks": [
+        "definition.js"
+    ],
+    "toolbox": "toolbox.xml",
+    "languages": {
+        "en": "languages/en.js",
+        "vi": "languages/vi.js"
+    },
+    "poster": "poster.png"
+}
