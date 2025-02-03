@@ -1,67 +1,122 @@
 <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
-  <category id="core-iot" name="CORE IOT" colour="#ff8d12" icon="wifi">
-    <block type="coreiot_mqtt_connect" />
+  <category id="core-iot" name="CORE IOT" colour="#2196f3" icon="wifi">
 	
+    <block type="coreiot_connect" />
+
     <label text="Telemetry" web-class="blockLabelStyle"></label>
 
-      <block type="coreiot_send_telemetry_short">
-        <value name="VALUE">
-          <shadow type="text">
-            <field name="TEXT">25</field>
-          </shadow>
-        </value>
-      </block>
-      <block type="coreiot_send_telemetry">
-        <value name="VALUE">
-          <shadow type="text">
-            <field name="TEXT">25</field>
-          </shadow>
-        </value>
-      </block>
+    <block type="coreiot_send_telemetry_short">
+      <value name="VALUE">
+        <shadow type="text">
+          <field name="TEXT">25</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="coreiot_send_telemetry">
+      <value name="VALUE">
+        <shadow type="text">
+          <field name="TEXT">25</field>
+        </shadow>
+      </value>
+    </block>
 
-      <label text="RPC Call" web-class="blockLabelStyle"></label>
+    <block type="coreiot_send_telemetry_multiple" >
+      <value name="VALUE0">
+        <shadow type="text">
+          <field name="TEXT">value</field>
+        </shadow>
+      </value>
+      <value name="VALUE1">
+        <shadow type="text">
+          <field name="TEXT">value</field>
+        </shadow>
+      </value>
+      <value name="VALUE2">
+        <shadow type="text">
+          <field name="TEXT">value</field>
+        </shadow>
+      </value>
+      <value name="VALUE3">
+        <shadow type="text">
+          <field name="TEXT">value</field>
+        </shadow>
+      </value>
+      <value name="VALUE4">
+        <shadow type="text">
+          <field name="TEXT">value</field>
+        </shadow>
+      </value>
+      <value name="VALUE5">
+        <shadow type="text">
+          <field name="TEXT">value</field>
+        </shadow>
+      </value>
+    </block>
 
-      <block type="coreiot_on_rpc_call" />
-      <block type="coreiot_request_compare_value" >
-        <value name="VALUE">
-          <shadow type="text">
-            <field name="TEXT">on</field>
-          </shadow>
-        </value>
-      </block>
-      <block type="coreiot_request_compare_value" >
-        <value name="VALUE">
-          <shadow type="math_number">
-            <field name="NUM">1</field>
-          </shadow>
-        </value>
-      </block>
-      <block type="coreiot_send_rpc_reply">
-        <value name="VALUE">
-          <shadow type="text">
-            <field name="TEXT">1</field>
-          </shadow>
-        </value>
-      </block>
-      <block type="coreiot_get_request_info" />
+    <label text="RPC call" web-class="blockLabelStyle"></label>
 
-      <label text="Device Attributes" web-class="blockLabelStyle"></label>
+    <block type="coreiot_on_rpc_call" />
+    <block type="coreiot_request_compare_value" >
+      <value name="VALUE">
+        <shadow type="text">
+          <field name="TEXT">on</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="coreiot_request_compare_value" >
+      <value name="VALUE">
+        <shadow type="math_number">
+          <field name="NUM">1</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="coreiot_send_rpc_reply">
+      <value name="VALUE">
+        <shadow type="text">
+          <field name="TEXT">1</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="coreiot_send_rpc_reply">
+      <value name="VALUE">
+        <shadow type="math_number">
+          <field name="NUM">1</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="coreiot_get_request_info" />
 
-      <block type="coreiot_send_attributes">
-        <value name="VALUE">
-          <shadow type="text">
-            <field name="TEXT">active</field>
-          </shadow>
-        </value>
-      </block>
-      <block type="coreiot_on_attribute_update" />
-      <block type="coreiot_on_request_attribute" />
-      <block type="coreiot_get_attributes">
-        <value name="VALUE">
-          <shadow type="text">
-            <field name="TEXT">maxTemperature</field>
-          </shadow>
-        </value>
-      </block>
+    <label text="Device attributes" web-class="blockLabelStyle"></label>
+
+    <block type="coreiot_send_attributes">
+      <value name="VALUE">
+        <shadow type="text">
+          <field name="TEXT">active</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="coreiot_send_attributes">
+      <value name="VALUE">
+        <shadow type="math_number">
+          <field name="NUM">1</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="coreiot_on_attribute_update" />
+    <block type="coreiot_on_request_attribute" >
+      <value name="ATTRIBUTE">
+        <shadow type="text">
+          <field name="TEXT">maxTemperature</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="coreiot_get_attributes">
+      <value name="NAME">
+        <shadow type="text">
+          <field name="TEXT">maxTemperature</field>
+        </shadow>
+      </value>
+    </block>
+
   </category>
 </xml>

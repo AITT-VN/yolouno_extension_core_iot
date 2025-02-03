@@ -1,15 +1,11 @@
-from ci_device_mqtt import CIDeviceMqttClient
-import machine, time
+from ci_device_mqtt import *
 from pins import *
 
 led_d13 = Pins(D13_PIN)
 
 count = 0
 
-telemetry = {"temperature": 32.9,"humidity": 90.1, "state": False, "currentFirmwareVersion": "v1.2.2"}
-
-#client = CIDeviceMqttClient('Sandiego', '0988807067', '898napce6v5pnchnvzu8')
-client = CIDeviceMqttClient('ohstem2', '123456789', '898napce6v5pnchnvzu8')
+client = CIDeviceMqttClient('wifi_name', 'wifi_pass', 'access_token')
 
 async def on_attributes_change(result, exception):
     if exception is not None:
@@ -61,15 +57,16 @@ async def setup():
   print('App started')
   neopix.show(0, (255, 0, 0))
   await client.connect()
+  telemetry = {"state": True, "currentFirmwareVersion": "v1.2.2"}
   await client.send_telemetry(telemetry)
-  neopix.show(0, (0, 255, 0))
   #client.subscribe_to_all_attributes(on_attributes_change)
-  client.subscribe_to_attribute('*', on_state_attribute_change)
+  client.subscribe_attribute('*', on_state_attribute_change)
   client.set_rpc_request_handler('getValue', on_rpc_request_getValue)
   client.set_rpc_request_handler('setValue', on_rpc_request_setValue)
   #await client.send_rpc_call("getState", {}, rpc_callback)
   await client.request_attributes(["ssid"], ['state'], on_attributes_change)
   asyncio.create_task(task_dht())
+  neopix.show(0, (0, 255, 0))
 
 ### loop ###
 async def main():

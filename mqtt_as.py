@@ -874,12 +874,21 @@ class MQTTClient(MQTT_base):
 
     async def _on_message_received(self):  # Respond to incoming messages
         async for topic, msg, retained in self.queue:
-            received_topic = str(topic, 'utf-8')
+            try:
+                received_topic = str(topic, 'utf-8')
+            except UnicodeError:
+                print('Corrupted message packet')
+                return
 
             for t, cb in self._topics:
                 #print(match_mqtt_topic(received_topic, t))
                 if match_mqtt_topic(received_topic, t) != None:
-                    asyncio.create_task(cb(received_topic, str(msg, 'utf-8')))
+                    try:
+                        msg_str = str(msg, 'utf-8')
+                    except UnicodeError:
+                        print('Corrupted message packet')
+                        return
+                    asyncio.create_task(cb(received_topic, msg_str))
             gc.collect()
 
 

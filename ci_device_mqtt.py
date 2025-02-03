@@ -1,9 +1,7 @@
-from time import sleep
 from sdk_utils import verify_checksum
 from ujson import dumps, loads
-from mqtt_as import MQTTClient, config, match_mqtt_topic
-from ubinascii import hexlify
-from machine import unique_id, reset
+from mqtt_as import MQTTClient, config
+from machine import reset
 from gc import collect
 from provision_client import ProvisionClient
 
@@ -25,6 +23,31 @@ ATTRIBUTES_TOPIC = 'v1/devices/me/attributes'
 ATTRIBUTE_REQUEST_TOPIC = 'v1/devices/me/attributes/request/'
 ATTRIBUTE_TOPIC_RESPONSE = 'v1/devices/me/attributes/response/'
 CLAIMING_TOPIC = "v1/devices/me/claim"
+
+'''
+    Extract value of an attribute from json
+        @type: can be client, shared or server
+        @name: key of the attribute to extract value
+    
+        json can be in 2 formats, without type or with type
+        {'client': {'state': 'active'}}
+        {'shared': {'maxValue': 100}}
+        {'client': {'state': 'active'}, 'shared': {'maxValue': 100}}
+        {'state': 'active}
+
+        @return: '' if cannot find the attribute name in json
+
+''' 
+def get_attribute_by_key(type, key, attributes):
+    if type in attributes:
+        if key in attributes:
+            return attributes[key]
+        else:
+            return ''
+    elif key in attributes:
+        return attributes[key]
+    else:
+        return ''
 
 
 class CIDeviceMqttClient:
@@ -276,7 +299,7 @@ class CIDeviceMqttClient:
             await self._client.wait_msg()
 
 
-    def unsubscribe_from_attribute(self, subscription_id):
+    def unsubscribe_attribute(self, subscription_id):
         for attribute in self.__device_sub_dict:
             if self.__device_sub_dict[attribute].get(subscription_id):
                 del self.__device_sub_dict[attribute][subscription_id]
@@ -288,10 +311,10 @@ class CIDeviceMqttClient:
     def clean_device_sub_dict(self):
         self.__device_sub_dict = {}
 
-    def subscribe_to_all_attributes(self, callback):
-        return self.subscribe_to_attribute("*", callback)
+    def subscribe_all_attributes(self, callback):
+        return self.subscribe_attribute("*", callback)
 
-    def subscribe_to_attribute(self, key, callback):
+    def subscribe_attribute(self, key, callback):
         self.__device_max_sub_id += 1
         if key not in self.__device_sub_dict:
             self.__device_sub_dict.update({key: {self.__device_max_sub_id: callback}})

@@ -88,9 +88,9 @@ var virtualPins = [
 Blockly.Blocks["coreiot_connect"] = {
   init: function () {
     this.jsonInit({
-      colour: "#ff8d12",
+      colour: "#2196f3",
       tooltip: "Connect to server Core IoT",
-      message0: "connect CoreIoT wifi %1 password %2 %3 access token %4 %5 server %6 port %7",
+      message0: "connect Core IoT wifi %1 password %2 %3 access token %4 %5 server %6 port %7",
       previousStatement: null,
       nextStatement: null,
       args0: [
@@ -110,7 +110,7 @@ Blockly.Blocks["coreiot_connect"] = {
         {
           "type": "field_input",
           "name": "TOKEN",
-          "text": "xxxxxxxxxxxx"
+          "text": "xxxxxxxxxxxxxxxxxxxx"
         },
         {
           "type": "input_dummy"
@@ -149,10 +149,10 @@ Blockly.Python['coreiot_connect'] = function(block) {
 Blockly.Blocks["coreiot_send_telemetry_short"] = {
   init: function () {
     this.jsonInit({
-      colour: "#ff8d12",
+      colour: "#2196f3",
       nextStatement: null,
       tooltip: "Send telemetry to server",
-      message0: "send telemetry { %1 %2 : %3 } %4",
+      message0: "send telemetry %1 %2 : %3 %4",
       previousStatement: null,
       args0: [
         {
@@ -181,17 +181,17 @@ Blockly.Python['coreiot_send_telemetry_short'] = function(block) {
   var key = block.getFieldValue('KEY');
   // TODO: Assemble Python into code variable.
   Blockly.Python.definitions_['import_coreiot'] = 'from ci_device_mqtt import *';
-  var code = "await ci_client.send_telemetry({'" + key + "': " + value + "})\n";
+  var code = "await ci_client.send_telemetry({'V" + key + "': " + value + "})\n";
   return code;
 };
 
 Blockly.Blocks["coreiot_send_telemetry"] = {
   init: function () {
     this.jsonInit({
-      colour: "#ff8d12",
+      colour: "#2196f3",
       nextStatement: null,
       tooltip: "Send telemetry to server",
-      message0: "send telemetry { %1 %2 : %3 } %4",
+      message0: "send telemetry %1 %2 : %3 %4",
       previousStatement: null,
       args0: [
         {
@@ -227,9 +227,9 @@ Blockly.Python['coreiot_send_telemetry'] = function(block) {
 Blockly.Blocks["coreiot_on_rpc_call"] = {
   init: function () {
     this.jsonInit({
-      colour: "#ff8d12",
+      colour: "#2196f3",
       tooltip: "Actions to do when receive rpc call from server side",
-      message0: "on rpc request %1 do %2 %3",
+      message0: "on receive rpc request %1 do %2 %3",
       args0: [
         {
           type: "field_input",
@@ -261,7 +261,7 @@ Blockly.Python['coreiot_on_rpc_call'] = function(block) {
       statements_action || Blockly.Python.PASS
     ]);
 
-  Blockly.Python.definitions_['task_ci_on_rpc_request_' + method] = 
+  Blockly.Python.definitions_['setup_ci_on_rpc_request_' + method] = 
       "ci_client.set_rpc_request_handler('" + method + "', " + cbFunctionName + ")";
 
   return '';
@@ -274,7 +274,7 @@ Blockly.Blocks['coreiot_get_request_info'] = {
         "message0": "rpc request value",
         "args0": [],
         "output": null,
-        "colour": "#ff8d12",
+        "colour": "#2196f3",
         "tooltip": "Extract rpc request info",
         "helpUrl": ""
       }
@@ -304,7 +304,7 @@ Blockly.Blocks['coreiot_request_compare_value'] = {
           }
         ],
         "output": "Boolean",
-        "colour": "#ff8d12",
+        "colour": "#2196f3",
         "tooltip": "Check if rpc request value is same as input value",
         "helpUrl": ""
       }
@@ -323,7 +323,7 @@ Blockly.Python['coreiot_request_compare_value'] = function (block) {
 Blockly.Blocks["coreiot_send_rpc_reply"] = {
   init: function () {
     this.jsonInit({
-      colour: "#ff8d12",
+      colour: "#2196f3",
       nextStatement: null,
       tooltip: "Send reply to an rpc call from server",
       message0: "send rpc reply %1 %2",
@@ -345,17 +345,17 @@ Blockly.Blocks["coreiot_send_rpc_reply"] = {
 Blockly.Python['coreiot_send_rpc_reply'] = function(block) {
   var value = Blockly.Python.valueToCode(block, 'VALUE', Blockly.Python.ORDER_ATOMIC);
   // TODO: Assemble Python into code variable.
-  var code = "await ci_client.send_rpc_reply(request_id, " + value + "})\n";
+  var code = "await ci_client.send_rpc_reply(request_id, " + value + ")\n";
   return code;
 };
 
 Blockly.Blocks["coreiot_send_attributes"] = {
   init: function () {
     this.jsonInit({
-      colour: "#ff8d12",
+      colour: "#2196f3",
       nextStatement: null,
       tooltip: "Send attribute update to server",
-      message0: "send attributes { %1 %2 : %3 } %4",
+      message0: "send attributes %1 %2 : %3 %4",
       previousStatement: null,
       args0: [
         {
@@ -390,9 +390,9 @@ Blockly.Python['coreiot_send_attributes'] = function(block) {
 Blockly.Blocks["coreiot_on_attribute_update"] = {
   init: function () {
     this.jsonInit({
-      colour: "#ff8d12",
+      colour: "#2196f3",
       tooltip: "Actions to do when receive attribute update from server side",
-      message0: "on attribute %1 update do %2 %3",
+      message0: "on receive update attribute %1 do %2 %3",
       args0: [
         {
           type: "field_input",
@@ -424,8 +424,8 @@ Blockly.Python['coreiot_on_attribute_update'] = function(block) {
       statements_action || Blockly.Python.PASS
     ]);
 
-  Blockly.Python.definitions_['task_ci_on_attribute_' + attr + '_update'] = 
-      "ci_client.subscribe_to_attribute('" + attr + "', " + cbFunctionName + ")";
+  Blockly.Python.definitions_['setup_ci_on_attribute_' + attr + '_update'] = 
+      "ci_client.subscribe_attribute('" + attr + "', " + cbFunctionName + ")";
 
   return '';
 };
@@ -433,7 +433,7 @@ Blockly.Python['coreiot_on_attribute_update'] = function(block) {
 Blockly.Blocks["coreiot_on_request_attribute"] = {
   init: function () {
     this.jsonInit({
-      colour: "#ff8d12",
+      colour: "#2196f3",
       tooltip: "Actions to do when send attribute request to server and receive response",
       message0: "request %1 attribute %2 and do %3 %4",
       args0: [
@@ -443,11 +443,11 @@ Blockly.Blocks["coreiot_on_request_attribute"] = {
           "options": [
             [
               "shared",
-              "SHARED"
+              "shared"
             ],
             [
               "client",
-              "CLIENT"
+              "client"
             ]
           ]
         },
@@ -463,6 +463,8 @@ Blockly.Blocks["coreiot_on_request_attribute"] = {
           "name": "ACTION"
         }
       ],
+      nextStatement: null,
+      previousStatement: null,
       helpUrl: "",
     });
   },
@@ -478,7 +480,7 @@ Blockly.Python['coreiot_on_request_attribute'] = function(block) {
   var globals = buildGlobalString(block);
 
   var cbFunctionName = Blockly.Python.provideFunction_(
-    'on_' + attr + '_attribute_request',
+    'on_request_attribute_' + attr,
     (globals != '')?
     ['async def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + '(attributes, exception):',
       globals,
@@ -488,13 +490,10 @@ Blockly.Python['coreiot_on_request_attribute'] = function(block) {
       statements_action || Blockly.Python.PASS
     ]);
 
-  //Blockly.Python.definitions_['task_ci_on_attribute_' + attr + '_request'] = 
-  //    "ci_client.subscribe_to_attribute('" + attr + "', " + cbFunctionName + ")";
-
-  if (type == 'SHARED')
-    return "ci_client.request_attributes([], ['" + attr + "'], " + cbFunctionName + ")";
+  if (type == 'shared')
+    return "await ci_client.request_attributes([], [" + attr + "], " + cbFunctionName + ")\n";
   else
-    return "ci_client.request_attributes(['" + attr + "'], [], " + cbFunctionName + ")";
+    return "await ci_client.request_attributes([" + attr + "], [], " + cbFunctionName + ")\n";
 };
 
 Blockly.Blocks['coreiot_get_attributes'] = {
@@ -523,7 +522,7 @@ Blockly.Blocks['coreiot_get_attributes'] = {
           }
         ],
         "output": null,
-        "colour": "#ff8d12",
+        "colour": "#2196f3",
         "tooltip": "Extract attribute info received",
         "helpUrl": ""
       }
@@ -535,11 +534,211 @@ Blockly.Python['coreiot_get_attributes'] = function (block) {
   var type = block.getFieldValue('TYPE');
   var name = Blockly.Python.valueToCode(block, 'NAME', Blockly.Python.ORDER_ATOMIC);
   // TODO: Assemble Python into code variable.
-  var code = '';
-  if (type == 'client')
-    code = "attributes['client']['" + name + "'] if 'client' in attributes and '" + name + "' in attributes['client'] else attributes['" + name + "'] if '" + name + "' in attributes else ''";
-  else 
-    code = "attributes['shared']['" + name + "'] if 'shared' in attributes and '" + name + "' in attributes['shared'] else attributes['" + name + "'] if '" + name + "' in attributes else ''";
+  var code = "get_attribute_by_key('" + type + "', " + name + ", attributes)";
   // TODO: Change ORDER_NONE to the correct strength.
   return [code, Blockly.Python.ORDER_NONE];
+};
+
+
+Blockly.Blocks['coreiot_send_telemetry_multiple'] = {
+  /**
+   * Block for creating a list with any number of elements of any type.
+   * @this {Block}
+   */
+  init: function() {
+    this.appendValueInput("VALUE0")
+        .setCheck(null)
+        .setAlign(Blockly.ALIGN_RIGHT)
+        .appendField("send telemetry")
+        .appendField(new Blockly.FieldTextInput("temperature"), "KEY0")
+        .appendField(":");
+    this.appendValueInput("VALUE1")
+        .setCheck(null)
+        .setAlign(Blockly.ALIGN_RIGHT)
+        .appendField(new Blockly.FieldTextInput("humidity"), "KEY1")
+        .appendField(":");
+
+
+    this.setHelpUrl('');
+    this.setColour('#2196f3');
+    this.itemCount_ = 2;
+    this.updateShape_();
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setMutator(new Blockly.Mutator(['telemetry_item']));
+    this.setTooltip('Send telemetry to server');
+  },
+  /**
+   * Create XML to represent list inputs.
+   * Backwards compatible serialization implementation.
+   * @return {!Element} XML storage element.
+   * @this {Block}
+   */
+  mutationToDom: function() {
+    const container = Blockly.utils.xml.createElement('mutation');
+    container.setAttribute('items', this.itemCount_);
+    return container;
+  },
+  /**
+   * Parse XML to restore the list inputs.
+   * Backwards compatible serialization implementation.
+   * @param {!Element} xmlElement XML storage element.
+   * @this {Block}
+   */
+  domToMutation: function(xmlElement) {
+    this.itemCount_ = parseInt(xmlElement.getAttribute('items'), 10);
+    this.updateShape_();
+  },
+  /**
+   * Returns the state of this block as a JSON serializable object.
+   * @return {{itemCount: number}} The state of this block, ie the item count.
+   */
+  saveExtraState: function() {
+    return {
+      'itemCount': this.itemCount_,
+    };
+  },
+  /**
+   * Applies the given state to this block.
+   * @param {*} state The state to apply to this block, ie the item count.
+   */
+  loadExtraState: function(state) {
+    this.itemCount_ = state['itemCount'];
+    this.updateShape_();
+  },
+  /**
+   * Populate the mutator's dialog with this block's components.
+   * @param {!Workspace} workspace Mutator's workspace.
+   * @return {!Block} Root block in mutator.
+   * @this {Block}
+   */
+  decompose: function(workspace) {
+    const containerBlock = workspace.newBlock('telemetry_container');
+    containerBlock.initSvg();
+    let connection = containerBlock.getInput('STACK').connection;
+    for (let i = 0; i < this.itemCount_; i++) {
+      const itemBlock = workspace.newBlock('telemetry_item');
+      itemBlock.initSvg();
+      connection.connect(itemBlock.previousConnection);
+      connection = itemBlock.nextConnection;
+      if (i < 2) {
+        itemBlock.setMovable(false);
+        itemBlock.setDeletable(false);
+      }
+    }
+    return containerBlock;
+  },
+  /**
+   * Reconfigure this block based on the mutator dialog's components.
+   * @param {!Block} containerBlock Root block in mutator.
+   * @this {Block}
+   */
+  compose: function(containerBlock) {
+    let itemBlock = containerBlock.getInputTargetBlock('STACK');
+    // Count number of inputs.
+    const connections = [];
+    while (itemBlock && !itemBlock.isInsertionMarker()) {
+      connections.push(itemBlock.valueConnection_);
+      itemBlock = itemBlock.nextConnection && itemBlock.nextConnection.targetBlock();
+    }
+    // Disconnect any children that don't belong.
+    for (let i = 0; i < this.itemCount_; i++) {
+      const connection = this.getInput('VALUE' + i).connection.targetConnection;
+      if (connection && connections.indexOf(connection) === -1) {
+        connection.disconnect();
+      }
+    }
+    this.itemCount_ = connections.length;
+    this.updateShape_();
+    // Reconnect any child blocks.
+    for (let i = 0; i < this.itemCount_; i++) {
+      Blockly.Mutator.reconnect(connections[i], this, 'VALUE' + i);
+    }
+  },
+  /**
+   * Store pointers to any connected child blocks.
+   * @param {!Block} containerBlock Root block in mutator.
+   * @this {Block}
+   */
+  saveConnections: function(containerBlock) {
+    let itemBlock = containerBlock.getInputTargetBlock('STACK');
+    let i = 0;
+    while (itemBlock) {
+      const input = this.getInput('VALUE' + i);
+      itemBlock.valueConnection_ = input && input.connection.targetConnection;
+      itemBlock =
+          itemBlock.nextConnection && itemBlock.nextConnection.targetBlock();
+      i++;
+    }
+  },
+  /**
+   * Modify this block to have the correct number of inputs.
+   * @private
+   * @this {Block}
+   */
+  updateShape_: function() {
+    for (let i = 2; this.getInput('VALUE' + i); i++) {
+      this.removeInput('VALUE' + i);
+    }
+    // Add new inputs.
+    for (let i = 2; i < this.itemCount_; i++) {
+      this.appendValueInput("VALUE" + i)
+        .setCheck(null)
+        //.appendField("                       ")
+        .setAlign(Blockly.ALIGN_RIGHT)
+        .appendField(new Blockly.FieldTextInput("telemetry" + i), "KEY" + i)
+        .appendField(":");
+    }
+
+    // Remove deleted inputs.
+    //for (let i = this.itemCount_; this.getInput('VALUE' + i); i++) {
+    //  this.removeInput('VALUE' + i);
+    //}
+  },
+};
+
+Blockly.Blocks['telemetry_container'] = {
+  /**
+   * Mutator block for list container.
+   * @this {Block}
+   */
+  init: function() {
+    this.setColour('#2196f3');
+    this.appendDummyInput().appendField("send telemetry");
+    this.appendStatementInput('STACK');
+    this.setTooltip("");
+    this.contextMenu = false;
+  },
+};
+
+Blockly.Blocks['telemetry_item'] = {
+  /**
+   * Mutator block for adding items.
+   * @this {Block}
+   */
+  init: function() {
+    this.setColour('#2196f3');
+    this.appendDummyInput().appendField('telemetry');
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setTooltip("Add an telemetry to the send list.");
+    this.contextMenu = false;
+  },
+};
+
+
+Blockly.Python['coreiot_send_telemetry_multiple'] = function(block) {
+  // TODO: Assemble JavaScript into code variable.
+  var telemetry_json = "";
+  for ( let i = 0; i < this.itemCount_; i++) {
+    var key = block.getFieldValue('KEY' + i);
+    var value = Blockly.Python.valueToCode(block, 'VALUE' + i, Blockly.Python.ORDER_ATOMIC);
+    telemetry_json += "'" + key + "':" + value;
+    if (i != this.itemCount_-1)
+      telemetry_json += ",";
+  }
+  
+  var code = "await ci_client.send_telemetry({" + telemetry_json + "})\n"
+
+  return code;
 };
