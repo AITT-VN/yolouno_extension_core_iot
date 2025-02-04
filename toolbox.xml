@@ -73,7 +73,7 @@
     <block type="coreiot_send_rpc_reply">
       <value name="VALUE">
         <shadow type="text">
-          <field name="TEXT">1</field>
+          <field name="TEXT">value</field>
         </shadow>
       </value>
     </block>
