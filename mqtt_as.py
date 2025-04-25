@@ -4,7 +4,7 @@
 
 # Pyboard D support added also RP2/default
 # Various improvements contributed by Kevin Köck.
-
+import os, time, gc, esp, sys, asyncio
 import gc
 import usocket as socket
 import ustruct as struct
@@ -24,7 +24,9 @@ import network
 
 gc.collect()
 from sys import platform
-
+from setting import *
+from utility import *
+from yolo_uno import *
 VERSION = (0, 7, 1)
 
 # Default short delay for good SynCom throughput (avoid sleep(0) with SynCom).
@@ -223,7 +225,12 @@ class MQTT_base:
 
         self._sock = None
         self._sta_if = network.WLAN(network.STA_IF)
-        self._sta_if.active(True)
+        if PRODUCT_TYPE == 'yolo-node':
+            self._sta_if.active(False)
+            self._sta_if.active(True)
+            self._sta_if.config(txpower=8.5)
+        else:
+            self._sta_if.active(True)
         if config["gateway"]:  # Called from gateway (hence ESP32).
             import aioespnow  # Set up ESPNOW
             while not (sta := self._sta_if).active():
@@ -890,5 +897,6 @@ class MQTTClient(MQTT_base):
                         return
                     asyncio.create_task(cb(received_topic, msg_str))
             gc.collect()
+
 
 
