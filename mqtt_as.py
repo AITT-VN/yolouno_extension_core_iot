@@ -6,16 +6,16 @@
 # Various improvements contributed by Kevin Köck.
 import os, time, gc, esp, sys, asyncio
 import gc
-import usocket as socket
-import ustruct as struct
+import socket
+import struct
 
 gc.collect()
-from ubinascii import hexlify
-import uasyncio as asyncio
+from binascii import hexlify
+import asyncio
 
 gc.collect()
-from utime import ticks_ms, ticks_diff
-from uerrno import EINPROGRESS, ETIMEDOUT
+from time import ticks_ms, ticks_diff
+from errno import EINPROGRESS, ETIMEDOUT
 
 gc.collect()
 from micropython import const
@@ -338,9 +338,9 @@ class MQTT_base:
         await asyncio.sleep_ms(_DEFAULT_MS)
         self.dprint("Connecting to broker.")
         if self._ssl:
-            import ussl
+            import ssl
 
-            self._sock = ussl.wrap_socket(self._sock, **self._ssl_params)
+            self._sock = ssl.wrap_socket(self._sock, **self._ssl_params)
         premsg = bytearray(b"\x10\0\0\0\0\0")
         msg = bytearray(b"\x04MQTT\x04\0\0\0")  # Protocol 3.1.1
 

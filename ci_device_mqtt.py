@@ -1,5 +1,5 @@
 from sdk_utils import verify_checksum
-from ujson import dumps, loads
+from json import dumps, loads
 from mqtt_as import MQTTClient, config
 from machine import reset
 from gc import collect

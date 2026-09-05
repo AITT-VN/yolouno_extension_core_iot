@@ -13,7 +13,7 @@
 #      limitations under the License.
 #
 
-from ujson import dumps, loads
+from json import dumps, loads
 from mqtt_as import MQTTClient
 from gc import collect
 
