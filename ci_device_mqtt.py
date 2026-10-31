@@ -28,26 +28,27 @@ CLAIMING_TOPIC = "v1/devices/me/claim"
     Extract value of an attribute from json
         @type: can be client, shared or server
         @name: key of the attribute to extract value
-    
-        json can be in 2 formats, without type or with type
-        {'client': {'state': 'active'}}
-        {'shared': {'maxValue': 100}}
-        {'client': {'state': 'active'}, 'shared': {'maxValue': 100}}
-        {'state': 'active}
+
+        json can be in 2 formats:
+        - response to request_attributes(), grouped by type:
+          {'client': {'state': 'active'}}
+          {'shared': {'maxValue': 100}}
+          {'client': {'state': 'active'}, 'shared': {'maxValue': 100}}
+        - shared attribute update pushed by the server, without type:
+          {'maxValue': 100}
 
         @return: '' if cannot find the attribute name in json
 
-''' 
+'''
 def get_attribute_by_key(type, key, attributes):
-    if type in attributes:
-        if key in attributes:
-            return attributes[key]
-        else:
-            return ''
-    elif key in attributes:
-        return attributes[key]
-    else:
+    if not isinstance(attributes, dict):
         return ''
+    group = attributes.get(type)
+    if isinstance(group, dict) and key in group:
+        return group[key]
+    if key in attributes:
+        return attributes[key]
+    return ''
 
 
 class CIDeviceMqttClient:
